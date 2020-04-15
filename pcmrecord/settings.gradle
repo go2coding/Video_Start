@@ -1,0 +1,2 @@
+rootProject.name='pcmrecord'
+include ':app'
