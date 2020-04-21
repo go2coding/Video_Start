@@ -6,8 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+
     <LinearLayout
         android:id="@+id/record_layout"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -51,6 +54,32 @@
             android:layout_weight="1"
             android:textSize="16sp"
             android:text="Stop Play"/>
+
+    </LinearLayout>
+
+    <com.tb.pcmrecord.AudioView
+        android:id="@+id/waveview"
+        android:layout_below="@+id/play_layout"
+        android:layout_height="300dp"
+        android:layout_width="fill_parent"
+        android:background="#8B8D8E"
+        android:paddingLeft="20dp"
+        android:paddingBottom="40dp" />
+
+    <LinearLayout
+        android:id="@+id/wave_layout"
+        android:layout_below="@+id/waveview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/show_wave_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="SHOW WAVE"/>
+
 
     </LinearLayout>
 

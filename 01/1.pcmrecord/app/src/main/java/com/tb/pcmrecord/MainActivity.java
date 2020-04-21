@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     private byte[] mBuffer;
 
+    private Button btn_wave;
+    private AudioView wave_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +124,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        btn_wave = (Button) findViewById(R.id.show_wave_button);
+        wave_view = (AudioView)findViewById(R.id.waveview);
+
+        btn_wave.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                wave_view.showPcmFileWave(new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                        + "/record/encode.pcm"));
             }
         });
     }
