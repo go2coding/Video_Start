@@ -1,4 +1,4 @@
 ﻿  main.cpp
-D:\work\2023\ffmpeg\ffmpeg\include\libavutil\rational.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\work\2023\ffmpeg\decoder\decoder\main.cpp(42,16): warning C4018: “<”: 有符号/无符号不匹配
-  decoder.vcxproj -> D:\work\2023\ffmpeg\decoder\x64\Debug\decoder.exe
+D:\work\2023\Video_Start\ffmpeg\ffmpeg\include\libavutil\rational.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\work\2023\Video_Start\ffmpeg\decoder\decoder\main.cpp(44,16): warning C4018: “<”: 有符号/无符号不匹配
+  decoder.vcxproj -> D:\work\2023\Video_Start\ffmpeg\decoder\x64\Debug\decoder.exe

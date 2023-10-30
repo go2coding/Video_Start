@@ -11,6 +11,8 @@ extern "C"
 #include "libavutil/imgutils.h"
 };
 
+#include "decoder.h"
+
 
 
 
@@ -90,6 +92,9 @@ int main(int argc, char* argv[])
 	sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
 	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, screen_w, screen_h);
 
+	//显示rgb
+	//sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, screen_w, screen_h);
+
 	sdlRect.x = 0;
 	sdlRect.y = 0;
 	sdlRect.w = screen_w;
@@ -99,7 +104,19 @@ int main(int argc, char* argv[])
 
 	AVPacket packet;
 	AVFrame* frame = av_frame_alloc();
-	while (av_read_frame(pFormatCtx, &packet) >= 0) {
+	SDL_Event event;
+	bool running = true;
+	
+	while (av_read_frame(pFormatCtx, &packet) >= 0 && running) {
+
+		//窗口可移动
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				running = false;
+			}
+		}
+
+		//H264转为yuv
 		if (packet.stream_index == videoindex) {
 			if (avcodec_send_packet(codecContext, &packet) < 0) {
 				// 错误处理...
@@ -107,11 +124,26 @@ int main(int argc, char* argv[])
 			while (avcodec_receive_frame(codecContext, frame) == 0) {
 				// 此时，frame包含YUV数据
 
-				//开始显示
+				//把他存储为图片
+				yuv_to_jpeg(frame);
+
+				//灰色显示
+				//memset(frame->data[1], 128, frame->linesize[1] * frame->height / 2);
+				//memset(frame->data[2], 128, frame->linesize[2] * frame->height / 2);
+
+
+				//显示yuv
 				SDL_UpdateYUVTexture(sdlTexture, &sdlRect,
 					frame->data[0], frame->linesize[0],
 					frame->data[1], frame->linesize[1],
 					frame->data[2], frame->linesize[2]);
+
+				//显示rgb
+				/*AVFrame* rgbFrame = decode_to_rgb(frame);
+				SDL_UpdateTexture(sdlTexture, NULL, rgbFrame->data[0], rgbFrame->linesize[0]);
+				av_frame_free(&rgbFrame);*/
+
+
 
 				SDL_RenderClear(sdlRenderer);
 				SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &sdlRect);
@@ -125,6 +157,11 @@ int main(int argc, char* argv[])
 		
 	}
 
+	// 释放资源
+	av_frame_free(&frame);
+	avcodec_close(codecContext);
+	avcodec_free_context(&codecContext);
+	avformat_close_input(&pFormatCtx);
 
 	return 0;
 }

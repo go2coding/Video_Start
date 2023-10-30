@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\work\2023\ffmpeg\decoder\x64\Debug\decoder.exe</FullPath>
+      <FullPath>D:\work\2023\Video_Start\ffmpeg\decoder\x64\Debug\decoder.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
